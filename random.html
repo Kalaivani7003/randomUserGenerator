@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User Generator</title>
+   <style>
+        body{
+            background : url('bg1.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        .a{
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            left:35vw;
+            width: 400px;
+            height: 200px;
+            top: 200px;
+            
+
+        }
+        .b{
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            left:40vw;
+            width: 250px;
+            color: black;
+            top: 330px;
+        }
+        #c{
+           width: 150px;
+           height: 35px;
+            border-radius: 5px;
+            border: 3p solid rgba(181, 210, 18);
+            cursor: pointer;
+        }
+        #c:hover{
+                background-color: rgb(11, 234, 197);
+        }
+
+    </style>
+    
+</head>
+<body>
+    <div class="a" >
+           <h1> Random User Generator</h1>
+           <button onclick="fetchData()" id="c">Click Here</button>
+
+    </div>
+    
+
+    <div id="user" class="b">
+
+    </div>
+
+    <script>
+        // Fetching a data from api is itself a asynchoronous function
+        async function fetchData() {
+        try{
+           
+            let contain=document.getElementById("user");
+            let response=await fetch ('https://randomuser.me/api/');
+            let data= await response.json();
+            let user=data.results[0];
+            let userName=`${user.name.title}. ${user.name.first} ${user.name.last}`;
+            let gender=user.gender;
+            let picture=user.picture.large;
+            contain.innerHTML= `<h3>${userName}</h3> <p>${gender}</p> <img src="${picture}">` ;
+        }
+        
+        catch(error){
+           contain.innerHTML=`<p>No user found</p>`;
+        }
+        }
+    </script>
+    
+</body>
+</html>
